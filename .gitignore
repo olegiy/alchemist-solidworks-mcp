@@ -57,3 +57,4 @@ drawing-samples/
 Thumbs.db
 .DS_Store
 dist/
+.vscode/settings.json
