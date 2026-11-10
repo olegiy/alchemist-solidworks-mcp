@@ -43,7 +43,7 @@ def _http_client(**kwargs) -> httpx.Client:
     """Talk to the local execution server: no system proxy, and a CONNECT phase of its own.
 
     1. `trust_env=False` — httpx trust_env=True reads HKCU Internet Settings and will send
-       http://localhost:5000 through a LAN proxy (Clash/V2Ray), which hangs or returns
+       http://localhost:8778 through a LAN proxy (Clash/V2Ray), which hangs or returns
        HTTP 502. Windows ProxyOverride (localhost / <local>) is not honoured by httpx, so
        we never inherit env/registry proxies here.
 

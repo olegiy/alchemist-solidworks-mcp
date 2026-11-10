@@ -30,7 +30,7 @@ namespace SolidworksExecution
             {
                 try
                 {
-                    string baseAddress = "http://localhost:5000/";
+                    string baseAddress = "http://localhost:8778/";
                     using (WebApp.Start<Startup>(url: baseAddress))
                     {
                         Console.WriteLine("SolidworksExecution server running at " + baseAddress);
@@ -45,7 +45,7 @@ namespace SolidworksExecution
                     threadException = ex;
                     // the port is taken — as a rule by another SolidworksExecution: one line, not a stack trace
                     if (ex.InnerException is System.Net.HttpListenerException hl)
-                        ExecLog.Write("not started, http://localhost:5000/ is taken (another SolidworksExecution?): " + hl.Message);
+                        ExecLog.Write("not started, http://localhost:8778/ is taken (another SolidworksExecution?): " + hl.Message);
                     else
                         ExecLog.Write("FATAL host error: " + ex);
                 }

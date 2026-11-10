@@ -1,4 +1,4 @@
-"""SOLIDWORKS MCP server (Alchemist for SOLIDWORKS): Claude <-> MCP <-> this adapter <-> HTTP localhost:5000 <-> SolidworksExecution.exe <-> SolidWorks.
+"""SOLIDWORKS MCP server (Alchemist for SOLIDWORKS): Claude <-> MCP <-> this adapter <-> HTTP localhost:8778 <-> SolidworksExecution.exe <-> SolidWorks.
 
 This file only assembles the server:
   registry.py      registers every tool family — tools_<family>.py, each with register(mcp, tool)

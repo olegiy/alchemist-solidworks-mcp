@@ -56,7 +56,7 @@ powershell -ExecutionPolicy Bypass -File execution\solidworks\build.ps1
 
 (Stop the running server first. The csproj compiles `**\*.cs` as well, so Visual Studio needs no file list either.)
 
-Restart (headless, `http://localhost:5000`):
+Restart (headless, `http://localhost:8778`):
 
 ```
 Get-Process SolidworksExecution -ErrorAction SilentlyContinue | Stop-Process -Force

@@ -7,11 +7,11 @@ from dotenv import load_dotenv
 load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
 
 # Keep the host spelled `localhost`: the C# server registers the HTTP.sys prefix
-# `http://localhost:5000/`, which matches on the HOST HEADER, so a request addressed to
+# `http://localhost:8778/`, which matches on the HOST HEADER, so a request addressed to
 # 127.0.0.1 is answered with HTTP 400 by HTTP.sys before it ever reaches our code (measured
 # 2026-09-28). Switching to the literal IP would shave the dual-stack connect tax of
 # (≈2 s per call on this machine), but only together with a C# prefix change that needs a urlacl.
-EXECUTION_BASE_URL = os.getenv("EXECUTION_BASE_URL", "http://localhost:5000")
+EXECUTION_BASE_URL = os.getenv("EXECUTION_BASE_URL", "http://localhost:8778")
 EXECUTE_ENDPOINT = f"{EXECUTION_BASE_URL}/api/tool/execute"
 STATE_ENDPOINT = f"{EXECUTION_BASE_URL}/api/tool/state"
 HEALTH_ENDPOINT = f"{EXECUTION_BASE_URL}/health"

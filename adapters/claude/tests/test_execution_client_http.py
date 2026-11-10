@@ -2,7 +2,7 @@
 
 Two silent failure modes, both of which only showed up on a live machine:
 
-1. httpx `trust_env=True` routes http://localhost:5000 through the Windows system proxy
+1. httpx `trust_env=True` routes http://localhost:8778 through the Windows system proxy
    (HKCU Internet Settings — Clash/V2Ray and friends), because urllib's
    getproxies_registry() never reports ProxyOverride and httpx therefore has no bypass
    list to honour. A proxied /health hangs or answers 502, _server_is_up() reads that as

@@ -126,7 +126,7 @@ on a build known to work. State versions are compared as increments, numbers to 
 
 | Variable | Read by | Default | What |
 |---|---|---|---|
-| `EXECUTION_BASE_URL` | adapter | http://localhost:5000 | the execution server (the name `localhost`, not an IP — see config.py) |
+| `EXECUTION_BASE_URL` | adapter | http://localhost:8778 | the execution server (the name `localhost`, not an IP — see config.py) |
 | `EXECUTION_EXE_PATH` | adapter | `bin\Debug\SolidworksExecution.exe` | what to start when the server does not answer |
 | `HTTP_TIMEOUT` | adapter | 30 | timeout of an ordinary call, s |
 | `LONG_HTTP_TIMEOUT` | adapter | 600 | timeout of long tools (Simulation, import, export), s |

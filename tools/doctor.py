@@ -112,16 +112,16 @@ def main():
     # server
     s = socket.socket()
     s.settimeout(1)
-    up = s.connect_ex(("127.0.0.1", 5000)) == 0
+    up = s.connect_ex(("127.0.0.1", 8778)) == 0
     s.close()
     if up:
         try:
             import httpx
-            h = httpx.get("http://localhost:5000/health", timeout=10, trust_env=False).json()   # no system proxy (see execution_client)
+            h = httpx.get("http://localhost:8778/health", timeout=10, trust_env=False).json()   # no system proxy (see execution_client)
             report("OK" if h.get("comAttached") else "WARN", "execution server UP",
                    f"comAttached={h.get('comAttached')} sw={h.get('swVersion')} doc={h.get('activeDocument')}")
         except Exception as ex:  # noqa: BLE001
-            report("WARN", "port 5000 busy but /health failed", str(ex)[:120])
+            report("WARN", "port 8778 busy but /health failed", str(ex)[:120])
     else:
         report("OK", "execution server not running (starts automatically on the first tool call)")
 
