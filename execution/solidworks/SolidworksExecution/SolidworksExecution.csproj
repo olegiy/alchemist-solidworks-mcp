@@ -18,6 +18,13 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
+  <!-- IDE-only: this legacy project needs the .NET Framework 4.8 targeting pack, which MSBuild does not
+       restore for non-SDK projects. When only the 4.8.1 pack is installed, point MSBuild at it instead of
+       failing project load with MSB3644. build.ps1 compiles against the installed runtime, so the output
+       is unaffected; an accidental 4.8.1-only API still fails there, at build time. -->
+  <PropertyGroup Condition="!Exists('$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll') and Exists('$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8.1\mscorlib.dll')">
+    <FrameworkPathOverride>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8.1</FrameworkPathOverride>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -27,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>1591;0168;0219;0649;0414;1701</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,12 +44,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>1591;0168;0219;0649;0414;1701</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <!-- the same framework references build.ps1 passes to csc -->
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\lib\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
