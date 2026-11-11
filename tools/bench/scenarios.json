@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "budget_seconds": 600,
+  "max_repairs_per_discrepancy": 3,
+  "status": "specification-only; executable actions and independent probes pending",
+  "parts": {
+    "plate": {"width_mm": 20, "length_mm": 30, "thickness_mm": 10, "volume_mm3": 6000, "area_mm2": 2200, "edited_volume_mm3": 6600, "edited_area_mm2": 2300},
+    "boss_plate": {"width_mm": 100, "length_mm": 60, "thickness_mm": 10, "boss_radius_mm": 10, "boss_height_mm": 15, "hole_diameter_mm": 6, "hole_centres_mm": [[15,15],[85,15],[15,45],[85,45]], "volume_formula": "60000 + 1140*pi", "edited_volume_formula": "60000 + 1290*pi", "area_formula": "15200 + 468*pi", "edited_area_formula": "15200 + 498*pi"}
+  },
+  "quality": {"dimension_absolute_mm": 0.01, "volume_area_relative": 0.0001, "rebuild_errors": 0, "required_sketches": "fully defined with driving dimensions, not fixed geometry", "parametric_audit": "separate copy: driving dimension +10%, measure geometry and dependencies, restore, measure again", "geometry": "independent essential surface and hole observations, not bbox or volume alone"},
+  "negative_probes": ["unknown dimension name before write", "overconstraint", "partial mutation", "readback unavailable"],
+  "scenarios": [
+    {"id":"plate-build", "task":"build", "part":"plate", "initial_state":"fresh owned blank part", "expected":"plate baseline and full quality", "dependencies":["anchored driving sketch", "extrude", "inspect", "independent audit"]},
+    {"id":"plate-edit", "task":"edit", "part":"plate", "initial_state":"fresh owned plate baseline", "expected":"thickness 11 mm, volume 6600 mm3, area 2300 mm2 and full quality", "dependencies":["baseline", "modify thickness 10 to 11", "actual readback", "independent audit"]},
+    {"id":"plate-repair", "task":"repair", "part":"plate", "initial_state":"fresh owned plate with thickness 9 mm despite valid API result", "controlled_error":{"criterion":"thickness", "actual_mm":9, "expected_mm":10}, "expected":"plate baseline and full quality", "dependencies":["measure defect", "bounded repair", "actual readback", "independent audit"]},
+    {"id":"boss-build", "task":"build", "part":"boss_plate", "initial_state":"fresh owned blank part", "expected":"boss_plate baseline and full quality", "dependencies":["anchored base sketch", "base extrude", "central boss", "four through holes", "independent audit"]},
+    {"id":"boss-edit", "task":"edit", "part":"boss_plate", "initial_state":"fresh owned boss_plate baseline", "expected":"boss height 16.5 mm, edited formulas and full quality", "dependencies":["baseline", "modify boss height 15 to 16.5", "actual readback", "independent audit"]},
+    {"id":"boss-repair", "task":"repair", "part":"boss_plate", "initial_state":"fresh owned boss_plate with boss height 14 mm despite valid API result", "controlled_error":{"criterion":"boss_height", "actual_mm":14, "expected_mm":15}, "expected":"boss_plate baseline and full quality", "dependencies":["measure defect", "bounded repair", "actual readback", "independent audit"]}
+  ]
+}

@@ -14,6 +14,7 @@ import uuid
 
 from execution_client import call_tool, get_state
 from response_mapper import fail
+from perf_trace import span
 
 # Parameters that name a file or folder. A RELATIVE path would be resolved against the execution server's working
 # directory (not the user's), so the file lands somewhere unexpected — ask for a full path instead.
@@ -77,8 +78,12 @@ def call(tool: str, params: dict) -> dict:
     state_version."""
     params = given(params)
     check_paths(params)
-    response = call_tool(tool, str(uuid.uuid4()), state_version(), params)
+    operation_id = str(uuid.uuid4())
+    with span("transport", operation_id):
+        response = call_tool(tool, operation_id, state_version(), params)
     if is_state_mismatch(response):
-        response = call_tool(tool, str(uuid.uuid4()), resync(), params)
+        operation_id = str(uuid.uuid4())
+        with span("transport", operation_id):
+            response = call_tool(tool, operation_id, resync(), params)
     set_state_version(response.get("stateVersion"))
     return response
