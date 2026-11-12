@@ -15,6 +15,7 @@
 !adapters/claude/guides/*.md
 !docs/*.md
 !skills/*/SKILL.md
+!/.kilo/command/*.md
 
 # upstream's ci.yml stays local-only; this fork's CI is .github/workflows/tests.yml
 .github/workflows/ci.yml
